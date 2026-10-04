@@ -10,7 +10,65 @@
 2. select_20_verified.py -> select 20 issues from swe bench verified that pass the benchmark test. selects at random.
 
 ## How to use the files.
-git clone swe-bench live and git clone swe-bench verified.
+
+## For Verified
+
+> git clone https://github.com/SWE-bench/SWE-bench.git
+
+> cd SWE-bench
+
+> python3 -m venv .venv
+
+> source .venv/bin/activate
+
+> python -m pip install --upgrade pip
+
+> pip install -e .
+
+> pip install datasets
+
+> pip install -e .
+
+> cp ../IssueResolutionWithGoals/ForIssueSelection/select_20_verified.py .
+
+Your directory should then look approximately like:
+SWE-bench
+- swebench/
+- logs/
+- select_20_verified.py
+- pyproject.toml
+- ...
+
+> python select_20_verified.py
+
+## SWE-bench-Live / MultiLang
+
+> cd ..
+
+> git clone https://github.com/microsoft/SWE-bench-Live.git
+
+> cd SWE-bench-Live
+
+> python3 -m venv .venv
+
+> source .venv/bin/activate
+
+> python -m pip install --upgrade pip
+
+> pip install -e .
+
+> pip install datasets
+
+> cp ../IssueResolutionWithGoals/ForIssueSelection/select_20_multilang_english.py .
+
+The directory should now look approximately like:
+SWE-bench-Live
+- evaluation/
+- select_20_multilang_english.py
+- pyproject.toml
+- ...
+
+> python select_20_multilang_english.py
 
 
 ## Files in "ForGoalExtraction"
@@ -27,12 +85,13 @@ Write the command in your terminal.
 > ls
 
 This should show: 
-goal_extraction/
-├── extract_goals_claude_v3.py
-├── selected_20_verified.json
-├── selected_20_live.json
-├── swe_verified_selected_20_with_goals.json
-└── swe_live_selected_20_with_goals.json
+
+goal_extraction
+- extract_goals_claude_v3.py
+- selected_20_verified.json
+- selected_20_live.json
+- swe_verified_selected_20_with_goals.json
+- swe_live_selected_20_with_goals.json
 
 > python3 --version
 
@@ -71,10 +130,10 @@ Full run
 Write the command in your terminal. 
 
 > ls
-patch_gen/
-├── run_patches.py
-├── swe_verified_selected_20_with_goals.json
-└── swe_live_selected_20_with_goals.json
+patch_gen
+- run_patches.py
+- swe_verified_selected_20_with_goals.json
+- swe_live_selected_20_with_goals.json
 
 > python3 -m venv .venv
 
