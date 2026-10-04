@@ -1,0 +1,360 @@
+{
+  "dataset": "SWE-bench-Live/MultiLang",
+  "random_seed": 42,
+  "runs_per_instance": 3,
+  "model_knowledge_cutoff": "2025-08-31",
+  "date_filter": {
+    "field": "created_at",
+    "rule": "created_at >= 2025-09-01T00:00:00Z"
+  },
+  "language_filter": {
+    "field": "problem_statement",
+    "rule": "Issue text must be in English: fewer than 10% of the letters in the problem_statement prose (code blocks, inline code, URLs and HTML removed) may come from scripts other than Latin or Greek.",
+    "threshold": 0.1
+  },
+  "sampling_rule": "All date-eligible language splits are combined and shuffled together using random seed 42; candidates are taken in that order.",
+  "gold_inclusion_rule": "Gold patch must resolve successfully in all three independent evaluations.",
+  "selected_count": 20,
+  "selected": [
+    {
+      "selection_number": 1,
+      "candidate_order": 1,
+      "instance_id": "ProvableHQ__leo-29291",
+      "language": "rust",
+      "repo": "ProvableHQ/leo",
+      "created_at": "2026-04-01T20:02:30+00:00",
+      "base_commit": "7baeb757491322824502dec4ec9c9d34e762b670",
+      "problem_statement": "[Bug] Panic when attempting to use array as key in mapping\n# 🐛 Bug Report\nI think the title is the issue, but not 100% certain from the panic message\n\n## Code\n\n```leo\n// The 'arc20' program.\nprogram arc20.aleo: ARC20 {\n    mapping balances: address => u128;\n    mapping allowances: [address;2] => u128;  // This seems to be the issue\n    ...\n```\n\n## Error:\n```\n⚠️ No network specified, defaulting to 'testnet'.\n⚠️ No endpoint specified, defaulting to 'https://api.explorer.provable.com/v1'.\n\n       Leo 🔨 Compiling 'arc20.aleo'\nthread `main` panicked at crates/passes/src/ssa_const_propagation/ast.rs:70:37:\nExpected type information to be available\nstack backtrace: \n   0: __mh_execute_header\n   1: __mh_execute_header\n   2: __mh_execute_header\n   3: __mh_execute_header\n   4: __mh_execute_header\n   5: __mh_execute_header\n   6: __mh_execute_header\n   7: __mh_execute_header\n   8: __mh_execute_header\n   9: __mh_execute_header\n  10: __mh_execute_header\n  11: __mh_execute_header\n  12: __mh_execute_header\n  13: __mh_execute_header\n  14: __mh_execute_header\n  15: __mh_execute_header\n  16: __mh_execute_header\n  17: __mh_execute_header\n  18: __mh_execute_header\n  19: __mh_execute_header\n  20: __mh_execute_header\n  21: __mh_execute_header\n  22: __mh_execute_header\n  23: __mh_execute_header\n  24: __mh_execute_header\n  25: __mh_execute_header\n  26: __mh_execute_header\n  27: __mh_execute_header\n  28: __mh_execute_header\n  29: __mh_execute_header\n  30: __mh_execute_header\n  31: __mh_execute_header\n  32: __mh_execute_header\n  33: __mh_execute_header\n  34: __mh_execute_header\n  35: __mh_execute_header\n\nerror: internal compiler error: unexpected panic\n\nnote: the compiler unexpectedly panicked. this is a bug.\n\nnote: we would appreciate a bug report: https://github.com/ProvableHQ/leo/issues/new?labels=bug,panic&template=bug.md&title=[Bug]\n\nnote: leo 4.0.0 (d9207de49e HEAD) features=[noconfig] running on Darwin 25.4.0\n\nnote: compiler args: leo build\n\nnote: compiler flags: CLI { debug: false, quiet: false, json_output: None, disable_update_check: false, command: Build { command: LeoBuild { options: BuildOptions { offline: false, enable_ast_spans: false, enable_dce: true, conditional_block_max_depth: 10, disable_conditional_branch_type_checking: false, enable_initial_ast_snapshot: false, enable_all_ast_snapshots: false, ast_snapshots: [], build_tests: false, no_cache: false, no_local: false }, env_override: EnvOptions { private_key: None, network: None, endpoint: None, devnet: false, consensus_heights: None } } }, path: None, home: None }\n```\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 2,
+      "candidate_order": 2,
+      "instance_id": "influxdata__telegraf-18686",
+      "language": "go",
+      "repo": "influxdata/telegraf",
+      "created_at": "2026-04-09T16:25:25+00:00",
+      "base_commit": "8a931cdf00b6d7b11741f6b2be30e52859970dcc",
+      "problem_statement": "Telegraf nftables plugin - unmarshall error in set\n### Relevant telegraf.conf\n\n```toml\n[[inputs.nftables]]\n  ## Use the specified binary which will be looked-up in PATH\n  binary = \"/usr/sbin/nft\"\n\n  ## Use sudo for command execution, can be restricted to\n  ## \"nft --json list table\"\n  use_sudo = true\n\n  ## Tables to monitor (may use \"family table\" format, e.g., \"inet filter\")\n  tables = [ \"inet firewall\" ]\n\n  ## Kinds of objects to monitor: \"counters\" (named counters), \"sets\",\n  ## (named sets), \"anonymous-counters\" (on commented rules).\n  include = [\"counters\" , \"sets\"]\n```\n\n### Logs from Telegraf\n\n```text\n2026-04-09T15:53:10Z W! Strict environment variable handling is the new default starting with v1.38.0! If your configuration does not work with strict handling please explicitly add the --non-strict-env-handling flag to switch to the previous behavior!\n2026-04-09T15:53:10Z I! Loading config: telegraf.conf\n2026-04-09T15:53:10Z I! Starting Telegraf 1.39.0-7fd2a36d (customized) brought to you by InfluxData the makers of InfluxDB\n2026-04-09T15:53:10Z I! Available plugins: 7 inputs, 0 aggregators, 0 processors, 4 parsers, 1 outputs, 0 secret-stores\n2026-04-09T15:53:10Z I! Loaded inputs: cpu nftables\n2026-04-09T15:53:10Z I! Loaded aggregators:\n2026-04-09T15:53:10Z I! Loaded processors:\n2026-04-09T15:53:10Z I! Loaded secretstores:\n2026-04-09T15:53:10Z W! Outputs are not used in testing mode!\n2026-04-09T15:53:10Z I! Tags enabled: host=virtualserver\n2026-04-09T15:53:10Z D! [agent] Initializing plugins\n2026-04-09T15:53:10Z D! [agent] Starting service inputs\n2026-04-09T15:53:10Z E! [inputs.nftables] Error in plugin: parsing command output failed: unable to parse set: json: cannot unmarshal string into Go struct field namedSet.elem of type nftables.elem\n```\n\n### System info\n\nTelegraf 1.39.0-7fd2a36d (customized)\n\n### Docker\n\n_No response_\n\n### Steps to reproduce\n\nI have this set defined in my nftables.conf:\n\nset AllowedIPs {\n  type ipv4_addr\n  elements = { 10.47.55.250, 10.47.56.232 }\n}\nthe nft --json list table firewall output:\n    {\n      \"set\": {\n        \"family\": \"inet\",\n        \"name\": \"AllowedIPs\",\n        \"table\": \"firewall\",\n        \"type\": \"ipv4_addr\",\n        \"handle\": 18,\n        \"flags\": [\n          \"interval\"\n        ],\n        \"elem\": [\n          \"10.47.55.250\",\n          \"10.47.56.232\"\n        ]\n      }\n    }\n\nThis issue looks to be because it’s expecting the element to be more like\n\n\"elem\": [{ \"val\": \"10.47.55.250\" }]\n\nLooks like (with my basic understanding) this has to do with how elem is defined in types.go\ntype namedSet struct {\n\tFamily string `json:\"family\"`\n\tName   string `json:\"name\"`\n\tTable  string `json:\"table\"`\n\tElem   []elem `json:\"elem,omitempty\"`\n}\n\ntype elem struct{}\n\n\n\n### Expected behavior\n\nIf the set is updated dynamically it does return objects in elem, however, predefined sets do not return an object but rather a list of strings, which causes the unmarshal to fail. Since the plugin is only counting the entries in elem perhaps it could be adjusted to work with either objects or strings.\n\n### Actual behavior\n\nGet the error above\n\n### Additional info\n\nWas directed to create a bug report: https://community.influxdata.com/t/telegraf-nftables-plugin-unmarshall-error-in-set/58409\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 3,
+      "candidate_order": 3,
+      "instance_id": "JasperFx__wolverine-2930",
+      "language": "cs",
+      "repo": "JasperFx/wolverine",
+      "created_at": "2026-05-27T19:09:40+00:00",
+      "base_commit": "bf23987b33dcbe544e275b659fc5020d6d6f567e",
+      "problem_statement": "Source-generate gRPC service discovery to replace runtime type scanning (Wolverine.Grpc counterpart to #2906)\nFollow-up to #2906 — apply the same generated-manifest approach to **Wolverine.Grpc** service discovery.\n\n## Current behavior (the scan to eliminate)\n\n`GrpcGraph.DiscoverServices` builds the gRPC service chains by scanning application assemblies:\n\n- `src/Wolverine.Grpc/CodeFirstGrpcServiceChain.cs:108` — `assembly.GetExportedTypes()` to find code-first gRPC service contract implementations.\n- (Hand-written services follow the same pattern via `HandWrittenGrpcServiceChain`.)\n\n`CodeFirstGrpcServiceChain` (`CodeFirstGrpcServiceChain.cs:28`) and `HandWrittenGrpcServiceChain` (`HandWrittenGrpcServiceChain.cs:25`) are already `Chain<>` + `ICodeFile`, mirroring `HandlerChain`/`HttpChain`.\n\n## Proposed approach (mirror #2906)\n\nAs settled in #2906 — **not** a Roslyn source generator:\n\n1. A runtime-codegen **`ICodeFile`** reads the **already-built `GrpcGraph`** (built by Wolverine's normal discovery during `dotnet run -- codegen write`) and emits a single manifest into the **application assembly**, capturing the discovered gRPC services/methods. No additional scanning — it reads what discovery already produced.\n2. Under **`TypeLoadMode.Static`**, `GrpcGraph.DiscoverServices` consumes the manifest to **skip the `GetExportedTypes` scan** (reflective fallback retained when absent).\n3. Custom discovery rules and per-chain configuration are captured for free, since the manifest reflects the *result* of the built graph — same rationale as #2906.\n\n## Acceptance criteria\n\n- [ ] gRPC service discovery resolvable from a compile-time-emitted manifest with no `GetExportedTypes` scan when present; reflective fallback retained.\n- [ ] Single manifest in the application assembly, produced at `codegen write` time from the built `GrpcGraph`.\n- [ ] Parity with reflective discovery across the Wolverine.Grpc test suite.\n\n## Related\n- #2906 (handler/message discovery — the parent design)\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 4,
+      "candidate_order": 4,
+      "instance_id": "ChaiScript__ChaiScript-670",
+      "language": "cpp",
+      "repo": "ChaiScript/ChaiScript",
+      "created_at": "2026-04-12T00:43:21+00:00",
+      "base_commit": "0d1ceed05d2fdff07ec0c8f3e3f03501b460860d",
+      "problem_statement": "TSAN builds don't actually use threads\nThe default is that threading is disabled. We want at the very least the TSAN builds to have threading enabled, but we also need at least one windows build (MSVC) with threading enabled.\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 5,
+      "candidate_order": 6,
+      "instance_id": "GladysAssistant__Gladys-2504",
+      "language": "js",
+      "repo": "GladysAssistant/Gladys",
+      "created_at": "2026-03-23T14:32:01+00:00",
+      "base_commit": "b32900c920e000491c817d33e748f6b57ffa2569",
+      "problem_statement": "Zigbee2mqtt : Error on discover page when energy monitoring has a missing energy meter id\n<img width=\"2912\" height=\"770\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/c7bc2939-f76d-44ac-b6db-8cd072e56632\" />\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 6,
+      "candidate_order": 8,
+      "instance_id": "wasm-bindgen__wasm-bindgen-5051",
+      "language": "rust",
+      "repo": "wasm-bindgen/wasm-bindgen",
+      "created_at": "2026-03-24T23:06:43+00:00",
+      "base_commit": "6e3e7eafe328ab94e1ceed356a88c88252056d5b",
+      "problem_statement": "`skip_typescript` is ignored when using `reexport`\nGiven:\n\n```\n#[wasm_bindgen::prelude::wasm_bindgen(module = \"my-codes\")]\nextern \"C\" {\n    #[wasm_bindgen(reexport, js_name = \"LanguageCode\", skip_typescript)]\n    fn __helper_language_code();\n}\n```\n\nI would expect it to not generate any output in the `.d.ts`, but it actually does generate this entry:\n\n```\nexport let LanguageCode: unknown;\n```\n\nRemoving `reexport` causes the typescript to disappear\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 7,
+      "candidate_order": 9,
+      "instance_id": "saghul__txiki.js-881",
+      "language": "c",
+      "repo": "saghul/txiki.js",
+      "created_at": "2026-03-26T10:04:17+00:00",
+      "base_commit": "0b582683b74e4f4738e0ce4ed54b2c504795e3b5",
+      "problem_statement": "FileWatcher stop working if the FileWatcher object is collected by GC\nThe `FileWatcher` will stop working if the FileWatcher object is collected by GC, it should keep process running and only be cleaned up when `FW.close()` is called, just like `tjs.serve`.\n```ts\n// define a variable to hold a reference of FileWatcher object\nconst h = tjs.watch(\"./test.txt\", () => {\n\tconsole.log(\"works\");\n})\n\ntjs.watch(\"./test.txt\", () => {\n\tconsole.log(\"disposed\");\n})\n\n// Process will exit if there is only a FileWatcher is running, use a infinite promise to keep process running\nawait new Promise(res => {});\n```\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 8,
+      "candidate_order": 10,
+      "instance_id": "kepano__defuddle-243",
+      "language": "ts",
+      "repo": "kepano/defuddle",
+      "created_at": "2026-04-12T01:55:09+00:00",
+      "base_commit": "c1c43d6c78c69ae7c1efd77e0bade99c0aca5b26",
+      "problem_statement": "Empty tables with no text content preserved in output\nTables whose cells contain zero text produce empty markdown tables in the output.\n\n## Example\n\nhttps://en.wikisource.org/wiki/Popular_Science_Monthly/Volume_77/October_1910/The_Moral_Equivalent_of_War\n\nOutput starts with:\n\n```\n|  |  |  |  |  |  |\n| --- | --- | --- | --- | --- | --- |\n```\n\nThis comes from a `<table class=\"pr_quality\">` — a proofreading progress bar rendered as colored cells:\n\n```html\n<table class=\"pr_quality\" title=\"1 validated page, 10 only proofread pages...\">\n  <tr>\n    <td class=\"quality4\" style=\"width: 8.33%\"></td>\n    <td class=\"quality3\" style=\"width: 83.33%\"></td>\n    <td class=\"quality2\" style=\"width: 0%\"></td>\n    <td class=\"quality1\" style=\"width: 0%\"></td>\n    <td class=\"quality0\" style=\"width: 8.33%\"></td>\n    <td class=\"qualitye\" style=\"width: 0%\"></td>\n  </tr>\n</table>\n```\n\n## Root cause\n\nDefuddle preserves tables as content, but tables with zero text across all cells are visual chrome (progress bars, spacers, layout dividers), never data tables.\n\n## Fix direction\n\nStrip tables where no cell contains text content.\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 9,
+      "candidate_order": 12,
+      "instance_id": "spring-projects__spring-security-18938",
+      "language": "java",
+      "repo": "spring-projects/spring-security",
+      "created_at": "2026-03-19T11:09:13+00:00",
+      "base_commit": "145579896fec5c31d9f0e3e81d41409a7f0baa12",
+      "problem_statement": "WebAuthn ignores AuthenticationEventPublisher\n**Describe the bug**\nWebAuthn does not use the configured (global) `AuthenticationEventPublisher`.\n\nlooks like `NullEventPublisher` is always used (at least thats what you can see in debug).  \nref. https://github.com/spring-projects/spring-security/blob/7.0.0-RC1/config/src/main/java/org/springframework/security/config/annotation/web/configurers/WebAuthnConfigurer.java#L178-L179\n\n**To Reproduce**\n* define an `AuthenticationEventPublisher` bean\n* authenticate e.g. with username/password\n  * `AuthenticationSuccessEvent` published on the configured `AuthenticationEventPublisher`\n* authenticate with a passkey\n  * `AuthenticationSuccessEvent` published on a `NullEventPublisher` (and swallowed)\n\n**Expected behavior**\nWebAuthn should use the configured (global) `AuthenticationEventPublisher`.\n\n**Sample**\n\nsample app will be referenced asap:\n* run\n* log in as user / password\n  * event listener fired, see log\n```\n2025-10-28T07:04:30.267+01:00  INFO 32928 --- [demo] [nio-8080-exec-6] com.example.demo.AuthenticationEvents    : AuthenticationEvents onSuccess: org.springframework.security.authentication.event.AuthenticationSuccessEvent[source=UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=user, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_USER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=C36A389B691D34D30439DB46090194E2], Granted Authorities=[ROLE_USER, FactorGrantedAuthority [authority=FACTOR_PASSWORD, issuedAt=2025-10-28T06:04:30.265508800Z]]]]\n```\n* http://localhost:8080/webauthn/register\n  * register a passkey\n* log out\n* log in using passkey\n  * event listener not fired\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 10,
+      "candidate_order": 14,
+      "instance_id": "pocoproject__poco-5270",
+      "language": "cpp",
+      "repo": "pocoproject/poco",
+      "created_at": "2026-03-26T10:42:16+00:00",
+      "base_commit": "db17c01b5ba1b5e1671323faf60aa60b036f7b9c",
+      "problem_statement": "Pipe close deadlocks on\n**Describe the bug**\nOn Linux, the Pipe's `close()` call will deadlock waiting for a blocked `writeBytes()` in a different thread to complete.\n\nWhile explicitly using Pipe's `close(Poco::Pipe::CLOSE_READ)` will resolve the issue, that call is vulnerable to deadlocking if there is a blocked `readBytes()` in a different thread.\n\nThis behavior change seems to be due to the fix applied for bug #5161 and pull #5160, which assumed that only readers would be blocked on a Pipe, and never writers.  (This may be true for the socket reactors, but programs using Pipes can block on either side.)\n\n**To Reproduce**\n```c++\n#include \"Poco/Thread.h\"\n#include \"Poco/Pipe.h\"\n#include <iostream>\n#include <string>\n\nint main() {\n\tPoco::Pipe pipe;\n\tPoco::Thread blockedThread;\n\n\tblockedThread.startFunc([&pipe]() {\n\t\tconst std::string buffer(100'000, 'A');\n\n\t\tstd::cerr << \"Writing data to pipe\" << std::endl;\n\t\tconst int bytesWritten = pipe.writeBytes(buffer.data(), buffer.size());\n\t\tstd::cerr << \"pipe.writeBytes() returned \" << bytesWritten << std::endl;\n\t});\n\n\tPoco::Thread::sleep(250); // Wait for pipe to block\n\n\tstd::cerr << \"Closing pipe\" << std::endl;\n\tpipe.close();  // Dead-locks on 1.15.0 or later\n\tstd::cerr << \"Pipe closed (works before 1.15.0)\" << std::endl;\n\n\tblockedThread.join();\n\n    return 0;\n}\n```\n\n**Expected behavior**\nBefore POCO v1.15.0, the `pipe.close()` would complete and exit.\nWith POCO v1.15.0 and later, the `pipe.close()` call deadlocks due to the blocked write call.\n\n**Logs**\nWith POCO v1.15.0 and later:\n```\nWriting data to pipe\nClosing pipe\n```\n\nWith POCO v1.14.2 and before:\n```\nWriting data to pipe\nClosing pipe\nPipe closed (works before 1.15.0)\npipe.writeBytes() returned 65536\n```\n\n**Please add relevant environment information:**\n - Tests performed on Debian 12 Linux (kernel 6.6.87.2)\n - POCO Version 1.15.0\n - GCC 12.2.0\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 11,
+      "candidate_order": 15,
+      "instance_id": "colbymchenry__codegraph-715",
+      "language": "c",
+      "repo": "colbymchenry/codegraph",
+      "created_at": "2026-06-07T06:10:06+00:00",
+      "base_commit": "471084dd6e436ef5eb66610ed624ee520338d623",
+      "problem_statement": "Python: codegraph_callers misses module-attribute call sites (module.func(...) after `from pkg import module`) — zero recall on a common test/namespacing pattern\n# Python: `codegraph_callers` misses module-attribute call sites (`module.func(...)` after `from pkg import module`) — zero recall on a common test/namespacing pattern\n\n## Summary\n\nOn Python, a call made through a **module object attribute** — `module.func(...)` where `module` was bound via `import pkg.module as module` or `from pkg import module` — produces **no `calls` edge**, so `codegraph_callers` / `callees` / `impact` / `trace` return empty for the target. Both the caller node and the callee node are correctly indexed; only the edge between them is dropped.\n\nThis is the **same root cause class** confirmed and fixed for Go in #388 / #469 (`isExternalImport` → `resolveViaImport` returning `null` → fall-through), and analogous to the per-language import-resolution fixes already shipped for Java/Kotlin (#314), TypeScript (#359), and C# (#381). **Python was never covered.** This was flagged in a comment on #388, but since that issue was scoped and closed as Go-specific, it has no dedicated tracking — hence this issue.\n\n## Environment\n\n- `@colbymchenry/codegraph@0.9.7` (the release containing the Go fix #469 `f1b79ee`, Java #314, TS #359, C# #381)\n- Linux\n- Index freshly rebuilt under 0.9.7 (`codegraph init` re-run immediately before querying — not a stale 0.9.4 index)\n- Project: real-world Python codebase (RAGFlow fork), 881 Python files indexed, 46k nodes / 108k edges\n\n## Minimal reproduction\n\n```\nrepro/\n  pkg/\n    __init__.py\n    mod.py          # def helper(x): return x\n  tests/\n    test_mod.py\n```\n\n`pkg/mod.py`:\n```python\ndef helper(x):\n    return x\n```\n\n`tests/test_mod.py` — both common module-attribute forms:\n```python\nfrom pkg import mod              # form 1: from-import of the module\nimport pkg.mod as mod2           # form 2: aliased module import\n\ndef test_helper():\n    assert mod.helper(1) == 1    # attribute access on module object\n    assert mod2.helper(2) == 2\n```\n\n**Expected:** `codegraph_callers helper` → 2 callers (the two `*.helper(...)` calls in `test_mod.py`).\n**Observed:** `No callers found`.\n\nCompare with the form that *does* work today:\n```python\nfrom pkg.mod import helper       # bare-name import\ndef test_helper():\n    assert helper(1) == 1        # bare call → edge IS created\n```\n\nSo the gap is specifically the **qualified/attribute call shape**, exactly mirroring Go's `pkg.Func(...)`.\n\n## Production evidence (this is not a toy-only failure)\n\nIn the RAGFlow codebase, `dialog_service._repair_grounded_citation_alignment` is called by **9 regression tests** via module-attribute access:\n\n```python\n# test/unit_test/api/db/services/test_dialog_service_prompt_sanitization.py\nfrom api.db.services import dialog_service      # line 21\n...\nanswer, cited = dialog_service._repair_grounded_citation_alignment(...)   # lines 1766, 1786, 1805, 1822\nanswer = dialog_service._preserve_grounded_reference_labels(...)          # lines 1730, 1747, 1770, 1840, 1857\n```\n\nGraph state on the fresh 0.9.7 index:\n\n| Node | Indexed? | Evidence |\n|---|---|---|\n| `_repair_grounded_citation_alignment` (callee) | ✅ | `codegraph_search` → `dialog_service.py:754` |\n| `test_repair_grounded_citation_alignment_*` (callers) | ✅ | `codegraph_search` → `test_dialog_service_prompt_sanitization.py:1757/1777/1796/1815` |\n| `calls` edge between them | ❌ | `codegraph_callers _repair_grounded_citation_alignment` → **\"No callers found\"** |\n\nSame result for `_preserve_grounded_reference_labels`. Both ends exist; the edge does not.\n\n**Real-world impact:** `codegraph_callers` reporting zero callers led to a (correctly caught, but only via textual grep) near-miss where these functions looked like dead code. For any user relying on `callers`/`impact` to make \"is this safe to delete?\" decisions, this is a silent high-recall miss. The pattern (`from pkg import module` then `module.helper(...)`) is extremely common in Python test suites that use module-attribute access for namespacing and ergonomic monkeypatching.\n\n## Hypothesis\n\nParallel to the #469 Go root cause: the Python resolver likely resolves a call's qualifier (`module`) to the imported module, but the qualified-member lookup (`module.helper` → the `helper` def node) either isn't attempted for the `module.attr(...)` call shape or fails to match because the target's stored name is the bare `helper` and the resolver doesn't strip/relate the module qualifier. Edge is then silently dropped (no fall-through to a bad match, just nothing — consistent with the clean ~0 recall).\n\n## Ask\n\n1. Can the Python import/call resolver get the same treatment Go received in #469 — resolve `module.func(...)` attribute calls (where `module` is a `from pkg import module` / `import pkg.module as module` binding) to the exported member node and emit the `calls` edge?\n2. Both `from pkg import module` and `import pkg.module as module` qualifier forms should be covered, plus re-exported aggregator modules.\n3. Happy to run targeted queries against the local `.codegraph/codegraph.db` (e.g. dump `edges` filtered to the test file) to validate any fix or hypothesis.\n\n## Related\n\n- #388 — Go: same symptom, fixed Go-only in #469 (`f1b79ee`). This Python case was noted in a comment there but the issue was closed as Go-specific.\n- #314 — Java/Kotlin import resolution (fixed)\n- #359 — TypeScript false/missing edges (fixed)\n- #381 — C# missing reference edges (fixed)\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 12,
+      "candidate_order": 16,
+      "instance_id": "colbymchenry__codegraph-1066",
+      "language": "c",
+      "repo": "colbymchenry/codegraph",
+      "created_at": "2026-06-29T21:54:13+00:00",
+      "base_commit": "738d2dc4ad84254b147aeb4a2c34879d60d524da",
+      "problem_statement": "v1.1.3 still indexes gitignored embedded repos; ignored benchmark corpus triggers resolving-refs watchdog\n## Summary\n\nOn CodeGraph v1.1.3, a root `.gitignore` rule for a directory that contains embedded git repositories is not honored by CodeGraph's scanner. The installed package's exported `scanDirectory()` still returns ~138k source files from the ignored embedded repos. A full `codegraph index` then reaches `Resolving refs` and the v1.1.3 command watchdog kills it as wedged.\n\nThis looks like a regression / remaining edge case after #970 / #976 / #980, where the intended behavior is that gitignored embedded repos are not discovered unless explicitly opted in with `codegraph.json.includeIgnored`.\n\n## Environment\n\n- CodeGraph: `1.1.3`\n- Install path shape: standalone bundle under `~/.codegraph/versions/v1.1.3`\n- Node bundled with CodeGraph: `v22.22.3`\n- OS: macOS / Darwin arm64\n- Hardware class: Apple Silicon workstation, 128 GB RAM\n- Project shape: private TypeScript monorepo with a local benchmark/reference corpus of public cloned repositories under a gitignored path\n\n## Relevant `.gitignore`\n\n```gitignore\n# benchmark corpus clones (analysis docs stay tracked)\nbenchmark/corpus/\nbenchmark/repos/\nbenchmark/**/node_modules/\n```\n\nThere is no `codegraph.json` and no `includeIgnored` opt-in.\n\n## Observed behavior\n\nRunning `codegraph index` on v1.1.3 scans the ignored embedded repositories anyway:\n\n```text\nScanning files — 140,712 found\nParsing code — done\nResolving refs 6%\n[CodeGraph] Main thread unresponsive for ~60s — killing the wedged process so a fresh one can start (#850). Disable with CODEGRAPH_NO_WATCHDOG=1.\n```\n\nThe existing graph shows the resulting scale:\n\n```text\nFiles:           140,701\nNodes:         1,595,121\nEdges:         1,776,928\nUnresolved refs: 5,370,697\nDB size:       4.8 GiB\n```\n\nBreakdown from the DB:\n\n```text\nbenchmark/ files:       138,450\nbenchmark/repos/ files: 138,456 from scanDirectory()\n```\n\nThe language mix is a strong signal that reference repos are being indexed rather than the first-party project:\n\n```text\ntypescript 43,478\ncsharp     17,204\npython     14,720\njava       12,933\nruby        8,665\nyaml        8,531\nphp         8,404\ngo          7,193\nswift       6,975\nrust        6,678\n```\n\n## Non-destructive repro / diagnostics\n\nThese commands were run from the project root with v1.1.3 installed.\n\nGit agrees the path is ignored:\n\n```bash\ngit check-ignore -v --no-index \\\n  benchmark/repos/ \\\n  benchmark/repos/docusaurus-openapi-docs/ \\\n  benchmark/repos/docusaurus-openapi-docs/.git\n```\n\nOutput:\n\n```text\n.gitignore:82:benchmark/repos/ benchmark/repos/\n.gitignore:82:benchmark/repos/ benchmark/repos/docusaurus-openapi-docs/\n.gitignore:82:benchmark/repos/ benchmark/repos/docusaurus-openapi-docs/.git\n```\n\nPlain git file enumeration also does not expose files under that path:\n\n```bash\ngit ls-files -o --exclude-standard benchmark | wc -l\n# 0\n```\n\nBut CodeGraph's scanner still includes them:\n\n```js\nconst { scanDirectory } = require('/path/to/codegraph/v1.1.3/lib/dist/extraction/index.js');\nconst files = scanDirectory(process.cwd());\nconsole.log({\n  count: files.length,\n  benchmarkRepos: files.filter((f) => f.startsWith('benchmark/repos/')).length,\n});\n```\n\nOutput:\n\n```json\n{ \"count\": 140712, \"benchmarkRepos\": 138456 }\n```\n\n`discoverEmbeddedRepoRoots()` also discovers all 19 ignored embedded repos:\n\n```json\n{\n  \"count\": 19,\n  \"benchmarkRepos\": 19,\n  \"sample\": [\n    \"benchmark/repos/RapiDoc/\",\n    \"benchmark/repos/docusaurus-openapi-docs/\",\n    \"benchmark/repos/fern/\",\n    \"benchmark/repos/scalar/\",\n    \"benchmark/repos/zudoku/\"\n  ]\n}\n```\n\nOne additional clue: `buildScopeIgnore()` does not consider the root `.gitignore` rule to match this path, even though `git check-ignore --no-index` does:\n\n```js\nconst { buildScopeIgnore } = require('/path/to/codegraph/v1.1.3/lib/dist/extraction/index.js');\nconst ig = buildScopeIgnore(process.cwd());\nconsole.log(ig.ignores('benchmark/repos/'));\nconsole.log(ig.ignores('benchmark/repos/docusaurus-openapi-docs/'));\nconsole.log(ig.ignores('benchmark/repos/docusaurus-openapi-docs/src/index.ts'));\n```\n\nOutput:\n\n```text\nfalse\nfalse\nfalse\n```\n\n## Expected behavior\n\nWith no `codegraph.json.includeIgnored`, `benchmark/repos/` should be excluded because the root `.gitignore` excludes it. The scan should be roughly the first-party project plus tracked benchmark analysis files, not the full contents of every embedded reference repo.\n\nA full `codegraph index` should therefore avoid the 138k-file reference corpus and should not enter the resolver shape that triggers the main-thread watchdog.\n\n## Actual behavior\n\n`scanDirectory()` and `discoverEmbeddedRepoRoots()` include the ignored embedded repos. Full indexing then attempts to resolve millions of low-value cross-repo references from the reference corpus and the v1.1.3 watchdog kills the process during `Resolving refs`.\n\nThe hottest unresolved names are all generic test/framework/library names, consistent with unrelated repos being mixed into one graph:\n\n```text\nexpect      139,596\nit           79,113\nAssert.That  73,563\ntoBe         61,454\nT            58,188\nto_string    39,292\nBuilder      36,393\n```\n\n## Why this seems distinct from already-closed issues\n\n- #970 / #976 / #980 say gitignored embedded repos should be ignored by default again. v1.1.3 still discovers this gitignored embedded-repo directory.\n- #999 added tracked-path `exclude` and resolver hardening. This case is not a tracked vendor dir and should not need `exclude`; `.gitignore` should be sufficient per #980.\n- The watchdog is doing its job by killing a wedged command, but the root problem is that the ignored reference corpus enters scan scope at all.\n\n## Workaround\n\nA committed `codegraph.json` with an explicit `exclude` for this path may be able to work around it:\n\n```json\n{ \"exclude\": [\"benchmark/repos/\"] }\n```\n\nBut this appears to contradict the promised zero-config behavior from #980: root `.gitignore` should exclude gitignored embedded repositories unless `includeIgnored` opts them back in.\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 13,
+      "candidate_order": 18,
+      "instance_id": "kubernetes__kops-18146",
+      "language": "go",
+      "repo": "kubernetes/kops",
+      "created_at": "2026-04-02T01:12:54+00:00",
+      "base_commit": "3f293c58c90d3a4995c7e6cc35e5b83e5df44ef7",
+      "problem_statement": "LB listener port for cilium-etcd's etcd cluster not created on GCE\n/kind bug\n\n**1. What `kops` version are you running? The command `kops version`, will display\n this information.**\n\nClient version: 1.33.1 (git-v1.33.1)\n\n**2. What Kubernetes version are you running? `kubectl version` will print the\n version if a cluster is running or provide the Kubernetes version specified as\n a `kops` flag.**\n\n**3. What cloud provider are you using?**\n\nGCE\n\n**4. What commands did you run?  What is the simplest way to reproduce this issue?**\n\nkops create cluster cluster.k8s.local \\\n  --topology private \\\n  --api-loadbalancer-type internal \\\n  --networking cilium-etcd \\\n  --bastion\n\n**5. What happened after the commands executed?**\n\nCluster built, but cilium pod continually restarted as they couldn't reach APISERVER:4003.  Confirmed that APISERVER isn't configured to listen on port 4003.\n\n**6. What did you expect to happen?**\n\n**7. Please provide your cluster manifest. Execute\n  `kops get --name my.example.com -o yaml` to display your cluster manifest.\n  You may want to remove your cluster name and other sensitive information.**\n\n```yaml\n```\n\n**8. Please run the commands with most verbose logging by adding the `-v 10` flag.\n  Paste the logs into this report, or in a gist and provide the gist link here.**\n\n**9. Anything else do we need to know?**\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 14,
+      "candidate_order": 19,
+      "instance_id": "duckdb__duckdb-24181",
+      "language": "cpp",
+      "repo": "duckdb/duckdb",
+      "created_at": "2026-07-27T08:04:15+00:00",
+      "base_commit": "66617082ef32967a04234b16762ed433bfc4b15a",
+      "problem_statement": "Query gets incorrect result after NULL related table update\n### What happens?\n\nSee repro for details.\n\n### To Reproduce\n\n```sql\n# name: test/sql/storage/wal/wal_null_update_row_group_pruning.test\n# description: Test row-group pruning after WAL replay of NULL updates\n# group: [wal]\n\nrequire skip_reload\n\nload {TEST_DIR}/wal_null_update_row_group_pruning.db\n\nstatement ok\nPRAGMA disable_checkpoint_on_shutdown\n\nstatement ok\nPRAGMA wal_autocheckpoint='1TB';\n\nstatement ok\nCREATE TABLE test AS SELECT i::BIGINT AS a FROM range(2048) tbl(i);\n\nstatement ok\nCREATE TABLE distinct_test AS SELECT 1::BIGINT AS a FROM range(2048);\n\nstatement ok\nCHECKPOINT;\n\nstatement ok\nUPDATE test SET a = NULL WHERE a = 3;\n\nstatement ok\nUPDATE distinct_test SET a = NULL WHERE rowid = 3;\n\nquery I\nSELECT count(*) FROM test WHERE a IS NULL;\n----\n1\n\nquery I\nSELECT count(*) FROM distinct_test WHERE a IS DISTINCT FROM 1;\n----\n1\n\nrestart\n\nquery I\nSELECT count(*) FROM test WHERE a IS NULL;\n----\n1\n\nquery I\nSELECT count(*) FROM test WHERE CASE WHEN a IS NULL THEN true ELSE false END;\n----\n1\n\nquery I\nSELECT count(*) FROM distinct_test WHERE a IS DISTINCT FROM 1;\n----\n1\n\nquery I\nSELECT count(*) FROM distinct_test WHERE CASE WHEN a IS DISTINCT FROM 1 THEN true ELSE false END;\n----\n1\n```\ngets error message\n```sh\n[~/Desktop/duckdb] (main)\nhjiang@hjiangs-MacBook-Pro$ ./build/reldebug/test/unittest test/sql/storage/wal/wal_null_update_row_group_pruning.test\nFilters: test/sql/storage/wal/wal_null_update_row_group_pruning.test\n[0/1] (0%): test/sql/storage/wal/wal_null_update_row_group_pruning.test\n1. test/sql/storage/wal/wal_null_update_row_group_pruning.test:32\n================================================================================\nWrong result in query! (test/sql/storage/wal/wal_null_update_row_group_pruning.test:32)!\n================================================================================\nSELECT count(*) FROM test WHERE a IS NULL;\n================================================================================\nMismatch on row 1, column count_star()(index 1)\n0 <> 1\n================================================================================\nExpected result:\n================================================================================\n1\n\n================================================================================\nActual result:\n================================================================================\n0\n```\n\n### OS:\n\nmacos\n\n### DuckDB Version:\n\n7316202df1f856f339e2442a05dfdada231b1fec\n\n### DuckDB Client:\n\nSQL\n\n### Hardware:\n\n_No response_\n\n### Full Name:\n\ndentiny\n\n### Affiliation:\n\nN/A\n\n### Did you include all relevant configuration (e.g., CPU architecture, Linux distribution) to reproduce the issue?\n\n- [x] Yes, I have\n\n### Did you include all code required to reproduce the issue?\n\n- [x] Yes, I have\n\n### Did you include all relevant data sets for reproducing the issue?\n\nYes\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 15,
+      "candidate_order": 20,
+      "instance_id": "shader-slang__slang-10682",
+      "language": "cpp",
+      "repo": "shader-slang/slang",
+      "created_at": "2026-03-30T13:06:56+00:00",
+      "base_commit": "45ccce9a376d48a7342615afb607d865cf973092",
+      "problem_statement": "[dynamic dispatch] Explicit generic specialization with interface type crashes with error 99999\n## Issue Description\n\nExplicitly specializing a constrained generic function with an interface type — `genericFunc<IFoo>(obj, 3.0)` — crashes the compiler with `error 99999: Unexpected context type for parameter info retrieval`.\n\nThis is a different crash from #10263 (which uses implicit inference). When the **same** function is called with **implicit** inference (`genericFunc(obj, 3.0)`), the compiler correctly emits `error 33180`. The explicit specialization path hits a separate unhandled code path.\n\n## Reproducer Code\n\n```slang\ninterface IFoo\n{\n    float calc(float x);\n}\n\nstruct A : IFoo { float calc(float x) { return x * 2.0; } }\nstruct B : IFoo { float calc(float x) { return x + 10.0; } }\n\nfloat genericFunc<T : IFoo>(T obj, float x)\n{\n    return obj.calc(x);\n}\n\nIFoo makeObj(int id)\n{\n    if (id == 0) return A();\n    else return B();\n}\n\nRWStructuredBuffer<float> outputBuffer;\n\n[numthreads(1, 1, 1)]\nvoid computeMain(int id : SV_DispatchThreadID)\n{\n    IFoo obj = makeObj(id);\n    float result = genericFunc<IFoo>(obj, 3.0);   // CRASH\n    outputBuffer[0] = result;\n}\n```\n\nCommand line:\n```bash\nslangc repro.slang -target hlsl -stage compute -entry computeMain\n```\n\n## Expected Behavior\n\nThe compiler emits `error 33180` (consistent with the implicit inference case), since `genericFunc(obj, 3.0)` already produces that diagnostic.\n\n## Actual Behavior\n\n```\n(0): error 99999: Slang compilation aborted due to an exception of N5Slang13InternalErrorE: unexpected: Unexpected context type for parameter info retrieval\n```\n\nThe crash occurs on all targets (spirv, hlsl, glsl).\n\nNote: Changing to implicit inference — `genericFunc(obj, 3.0)` instead of `genericFunc<IFoo>(obj, 3.0)` — correctly produces:\n```\nerror 33180: specializing '...' with an existential type is not allowed. All generic arguments must be statically resolvable at compile time.\n```\n\n## Environment\n- Slang Version: commit 6ffecd378 (master, 2026-02-26)\n- OS: Linux 6.14.0-37-generic x86_64 (Ubuntu 24.04)\n\n## Additional Context\n\nFound during issue #10290 testing. Related test file: `tests/language-feature/dynamic-dispatch/diagnose-explicit-specialize-with-interface.slang`.\n\nThis could be filed as a standalone issue or added as a note on #10263 since both involve interface types flowing into generic parameters.\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 16,
+      "candidate_order": 22,
+      "instance_id": "agentscope-ai__agentscope-java-2189",
+      "language": "java",
+      "repo": "agentscope-ai/agentscope-java",
+      "created_at": "2026-07-14T05:07:52+00:00",
+      "base_commit": "e3a412ed2cc944e401da861c8d5e464b967724e9",
+      "problem_statement": "Why does `DeepSeekFormatter` convert `system` messages to `user` messages?\n**<u>AgentScope-Java is an open-source project. To involve a broader community, we recommend asking your questions in English.</u>**\n\n`DeepSeekFormatter` currently converts every message with the `system` role into a `user` message:\n\nhttps://github.com/agentscope-ai/agentscope-java/blob/e3a412ed2cc944e401da861c8d5e464b967724e9/agentscope-extensions/agentscope-extensions-model/agentscope-extensions-model-openai/src/main/java/io/agentscope/extensions/model/openai/formatter/DeepSeekFormatter.java#L183-L185\n\n### Problem\n\nThis conversion removes the semantic boundary between the system prompt and the actual user input.\n\nFor example, the following messages:\n\n```json\n[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are an enterprise assistant. Follow these instructions...\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Some question....\"\n  }\n]\n```\n\nare formatted as:\n\n```json\n[\n  {\n    \"role\": \"user\",\n    \"content\": \"You are an enterprise assistant. Follow these instructions...\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Some question....\"\n  }\n]\n```\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 17,
+      "candidate_order": 24,
+      "instance_id": "usebruno__bruno-7620",
+      "language": "js",
+      "repo": "usebruno/bruno",
+      "created_at": "2026-03-30T14:29:47+00:00",
+      "base_commit": "c7ebe25cd69ad17d4efbeb5af384415534a68b3e",
+      "problem_statement": "Assert Section Signals Invalid JSON For Array With String Values\n### I have checked the following:\n\n- [x] I have searched existing issues and found nothing related to my issue.\n\n### This bug is:\n\n- [ ] making Bruno unusable for me\n- [ ] slowing me down but I'm able to continue working\n- [x] annoying\n- [x] this feature was working in a previous version but is broken in the current release.\n\n### Bruno version\n\n3.1.4\n\n### Operating System\n\nmacOS Tahoe 26.3.1 (a)\n\n### Describe the bug\n\nI usually have some basic assertions for all requests. I noticed that Bruno is failing a simple `res.body` `isJson` assertion now for some responses that are just a collection of string values; for instance:\n\n```javascript\n[\n  \"A55001213ZX0A\"\n]\n```\n\n### .bru file to reproduce the bug\n\n```bru\nmeta {\n  name: Some Identifier\n  type: http\n}\n\nget {\n  url: {{api-host}}/resource/{{resource-id}}\n  body: none\n}\n\nheaders {\n  Accept: application/json\n}\n\nvars:pre-request {\n  resource-id: A55001213ZX0A\n}\n\nassert {\n  res.status: eq 200\n  res.body: isJson\n}\n```\n\n### Screenshots/Live demo link\n\nN/A\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 18,
+      "candidate_order": 27,
+      "instance_id": "c-ares__c-ares-1190",
+      "language": "c",
+      "repo": "c-ares/c-ares",
+      "created_at": "2026-07-03T17:52:22+00:00",
+      "base_commit": "7edb590f06b994fa8a84bb49f10221e204f79c12",
+      "problem_statement": "SRV record should not allow name compression\nSUMMARY\n\nc-ares accepts a DNS SRV record whose TARGET field is encoded as a\ncompression pointer and exposes it to applications as a fully resolved\ntyped SRV RR. RFC 2782 explicitly prohibits name compression in SRV\nRDATA. c-ares's own ares_dns_rec_allow_name_comp() reflects this by\nexcluding SRV from its allowlist, but the SRV typed parser calls\nares_dns_name_parse() unconditionally, bypassing that intent entirely.\n\nThe issue is reachable from raw DNS response bytes and surfaces through\nboth the modern ares_dns_parse() API and the legacy\nares_parse_srv_reply() API.\n\n\nVERSION TESTED\n\nv1.34.6 (latest release)\ncommit 3ac47ee4ebc0373fe57677523ec960f6c1cb0e15\n\nConfirmed present in:\n  src/lib/record/ares_dns_parse.c\n  src/lib/record/ares_dns_mapping.c\n\n\nROOT CAUSE\n\nares_dns_rec_allow_name_comp() in ares_dns_mapping.c correctly\nenumerates only RFC 1035-era record types as compression-allowed (NS,\nCNAME, SOA, PTR, HINFO, MX, TXT). SRV is intentionally absent.\n\nHowever, the SRV typed parser (ares_dns_parse_rr_srv) calls\nares_dns_parse_and_set_dns_name() for the TARGET field, which\nunconditionally calls ares_dns_name_parse(). That function always\nfollows compression pointers regardless of record type.\n\nares_dns_rec_allow_name_comp() is consulted at line ~1143 of\nares_dns_parse.c only to decide raw-RR fallback flags. It is never\nused to gate whether ares_dns_name_parse() follows compression pointers\ninside the per-type parsers. The allowlist exists and is correct in\nintent; it is simply never enforced at the name-parsing level for\ntyped parsers.\n\nRFC 2782 states the following for the TARGET field:\n\n  \"Unless and until permitted by future standards action, name\n   compression is not to be used for this field.\"\n\n\nIMPACT\n\nA network-based attacker who can supply a crafted DNS response (via a\nrogue DNS server, DNS spoofing, or a poisoned cache) can deliver a\nmalformed SRV record whose TARGET is a compression pointer. c-ares\naccepts this record as a valid typed SRV RR and exposes the resolved\nname to the calling application with no indication that the wire\nencoding was non-compliant.\n\nApplications that trust the parsed SRV TARGET receive data derived from\na response that should have been rejected or returned as a raw RR. The\nissue affects any application using c-ares for SRV resolution.\n\nNote: This is a standards-compliance and parser validation issue.\n\nReported By: hextheshadow0x@gmail.com\n\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 19,
+      "candidate_order": 28,
+      "instance_id": "floci-io__floci-1895",
+      "language": "java",
+      "repo": "floci-io/floci",
+      "created_at": "2026-07-16T17:53:52+00:00",
+      "base_commit": "fba4d8f5f9181d225aa9a3a4c69839c6738501d8",
+      "problem_statement": "[BUG] Athena: GetQueryExecution reports OutputLocation as a directory prefix instead of the result CSV object key\n**Service**\nAthena (result delivery via S3)\n\n**AWS API Action**\nGetQueryExecution (after StartQueryExecution)\n\n**Expected behavior**\nReal AWS Athena writes the query result to a CSV object named after the query execution id and reports that object's key in `ResultConfiguration.OutputLocation`:\n\n```\ns3://<bucket>/<prefix>/<QueryExecutionId>.csv\n```\n\n`s3api get-object` on the reported OutputLocation succeeds. SDK-shaped consumers routinely fetch the reported location verbatim to stream results.\n\n**Actual behavior**\nfloci reports a directory prefix (trailing slash) and writes the object to `results.csv` inside it:\n\n```\n\"OutputLocation\": \"s3://probe-results/out/b2e6ffce-5905-468a-baf9-5c5dacdf8b91/\"\n```\n\n`aws s3 ls s3://probe-results/out/ --recursive` shows the object at `out/<qid>/results.csv`. `get-object` on the reported key verbatim fails:\n\n```\nAn error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.\n```\n\nConstructing the AWS-shaped key `out/<qid>.csv` also returns NoSuchKey — the object only exists at `out/<qid>/results.csv`, so a client cannot compensate by deriving the conventional key.\n\nSo even on a `SUCCEEDED` query, any client that follows the AWS contract (fetch the reported OutputLocation) breaks with NoSuchKey. The query engine itself works — the query returned correct data; only the reported location diverges from AWS.\n\n**Reproduction**\n```bash\nexport AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test AWS_DEFAULT_REGION=us-east-1\nEP=--endpoint-url=http://localhost:4566\n\naws $EP s3 mb s3://probe-data\naws $EP s3 mb s3://probe-results\nprintf '{\"eventname\":\"login\",\"username\":\"alice\"}\\n{\"eventname\":\"logout\",\"username\":\"bob\"}\\n' > /tmp/events.json\naws $EP s3 cp /tmp/events.json s3://probe-data/events/events.json\n\naws $EP glue create-database --database-input Name=probedb\naws $EP glue create-table --database-name probedb --table-input '{\n  \"Name\": \"events\",\n  \"StorageDescriptor\": {\n    \"Columns\": [{\"Name\":\"eventname\",\"Type\":\"string\"},{\"Name\":\"username\",\"Type\":\"string\"}],\n    \"Location\": \"s3://probe-data/events/\",\n    \"SerdeInfo\": {\"SerializationLibrary\": \"org.openx.data.jsonserde.JsonSerDe\"}\n  }\n}'\n\nQID=$(aws $EP athena start-query-execution \\\n  --query-string \"SELECT eventname, username FROM events WHERE username='alice'\" \\\n  --query-execution-context Database=probedb \\\n  --result-configuration OutputLocation=s3://probe-results/out/ \\\n  --query QueryExecutionId --output text)\n# first query on a cold container can take minutes while the engine sidecar starts\nuntil [ \"$(aws $EP athena get-query-execution --query-execution-id \"$QID\" \\\n  --query 'QueryExecution.Status.State' --output text)\" = \"SUCCEEDED\" ]; do sleep 5; done\naws $EP athena get-query-execution --query-execution-id \"$QID\" \\\n  --query 'QueryExecution.{State:Status.State,OutputLocation:ResultConfiguration.OutputLocation}'\naws $EP s3 ls s3://probe-results/out/ --recursive\n# AWS contract: fetching the key reported in OutputLocation verbatim must succeed — on floci it returns NoSuchKey\nOUT=$(aws $EP athena get-query-execution --query-execution-id \"$QID\" \\\n  --query 'QueryExecution.ResultConfiguration.OutputLocation' --output text)\naws $EP s3api get-object --bucket probe-results --key \"${OUT#s3://probe-results/}\" /tmp/result.csv\n```\n\n**Environment**\n- Floci version: `floci/floci:1.5.30-compat` (also reproduces on `1.5.28-compat`)\n- Running via: Docker, `docker run -p 4566:4566 -v /var/run/docker.sock:/var/run/docker.sock floci/floci:1.5.30-compat` (socket mounted so the Athena engine sidecar can start)\n- Client: aws-cli 2.x\n\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    },
+    {
+      "selection_number": 20,
+      "candidate_order": 30,
+      "instance_id": "IfcOpenShell__IfcOpenShell-8887",
+      "language": "cpp",
+      "repo": "IfcOpenShell/IfcOpenShell",
+      "created_at": "2026-07-23T12:59:22+00:00",
+      "base_commit": "98a25eca960130e8ad8bbdfc937cec7d28080345",
+      "problem_statement": "Bonsai: Cost: duplicating a cost schedule also adds the copied items to the original schedule\n### Bug Description\n\n### Description\nDuplicating a cost schedule leaves the *duplicated* cost items assigned to **both** schedules.\nThey are the same entity, so deleting them from the original also removes them from the copy.\n\n### Steps to reproduce\n1. Create a cost schedule with at least one top-level cost item.\n2. Duplicate the schedule (`bim.copy_cost_schedule`, the duplicate icon in the Cost Schedules UI).\n3. Open the original schedule → it now contains the duplicated items as well.\n4. Delete those duplicates from the original → they also disappear from the new schedule.\n\n\n### Attachments\n\n_No response_\n\n### Debug and Error Output\n\n```true\n\n```\n",
+      "gold_runs_resolved": 3,
+      "gold_runs_total": 3,
+      "statuses": [
+        "resolved",
+        "resolved",
+        "resolved"
+      ]
+    }
+  ]
+}
