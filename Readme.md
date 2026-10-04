@@ -43,6 +43,7 @@ python version should be more than 3.9
 > source .venv/bin/activate
 
 > pip install --upgrade pip
+
 > pip install anthropic
 
 > python -c "import anthropic; print(anthropic.__version__)"
@@ -86,15 +87,19 @@ patch_gen/
 > export OPENAI_API_KEY="sk-..."
 
 Check the Docker images (no model calls, no cost)
+
 > python run_patches.py swe_verified_selected_20_with_goals.json swe_live_selected_20_with_goals.json --check-images
 
 Look at the prompts (no cost)
->python run_patches.py swe_verified_selected_20_with_goals.json swe_live_selected_20_with_goals.json \
-    --conditions baseline goal --dry-run
-cat patch_runs/verified/goal/rep_1/django__django-12143/prompt.txt
+
+>python run_patches.py swe_verified_selected_20_with_goals.json swe_live_selected_20_with_goals.json --conditions baseline goal --dry-run
+
+> cat patch_runs/verified/goal/rep_1/django__django-12143/prompt.txt
 
 Small test: one issue, both conditions, one repetition
+
 > python run_patches.py swe_verified_selected_20_with_goals.json --conditions baseline goal --reps 1 --instance-ids django__django-14493
 
 Full run   
+
 > python run_patches.py swe_verified_selected_20_with_goals.json swe_live_selected_20_with_goals.json --conditions baseline goal --reps 3 --workers 2
